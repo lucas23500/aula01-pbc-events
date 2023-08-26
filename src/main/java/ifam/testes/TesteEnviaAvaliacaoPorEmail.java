@@ -16,6 +16,9 @@ public class TesteEnviaAvaliacaoPorEmail {
         avaliacao.addOuvinte(emailService);
         avaliacao.addOuvinte(smsService);
 
+        avaliacao.addOuvinteNotaBaixa(emailService);
+        avaliacao.addOuvinteNotaBaixa(smsService);
+
         avaliacao.setNota(9.0);
     }
 }

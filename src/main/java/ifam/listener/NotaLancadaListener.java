@@ -8,5 +8,4 @@ public interface NotaLancadaListener extends EventListener {
 
     void notaLancada(NotaLancadaEvent notaEvent);
 
-
 }

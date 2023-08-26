@@ -16,4 +16,5 @@ public class EmailService implements NotaLancadaListener {
         System.out.println("Email:" + avaliacao.getAluno().getEmail());
         System.out.println("Nota:" + avaliacao.getNota());
     }
+
 }

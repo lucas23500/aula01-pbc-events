@@ -1,11 +1,12 @@
 package ifam.listener;
 
+import ifam.event.NotaAbaixoMediaLancadaEvent;
 import ifam.event.NotaLancadaEvent;
 
 import java.util.EventListener;
 
-public interface NotaLancadaListener extends EventListener {
+public interface NotaAbaixoMediaLancadaListener extends EventListener {
 
-    void notaLancada(NotaLancadaEvent notaEvent);
+    void notaAbaixoMediaLancada(NotaAbaixoMediaLancadaEvent notaEvent);
 
 }

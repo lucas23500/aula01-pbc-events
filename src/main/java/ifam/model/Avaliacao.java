@@ -1,6 +1,8 @@
 package ifam.model;
 
+import ifam.event.NotaAbaixoMediaLancadaEvent;
 import ifam.event.NotaLancadaEvent;
+import ifam.listener.NotaAbaixoMediaLancadaListener;
 import ifam.listener.NotaLancadaListener;
 
 import java.util.ArrayList;
@@ -17,26 +19,34 @@ public class Avaliacao {
 
     private Double nota;
 
-    public List<NotaLancadaListener> ouvintes = Collections.synchronizedList(new ArrayList<>());
+    public List<NotaLancadaListener> ouvintesGeral = Collections.synchronizedList(new ArrayList<>());
+    public List<NotaAbaixoMediaLancadaListener> ouvinteNotaBaixa = Collections.synchronizedList(new ArrayList<>());
 
     public synchronized void addOuvinte(NotaLancadaListener ouvinte){
-        if(!ouvintes.contains(ouvinte)) {
-            ouvintes.add(ouvinte);
+        if(!ouvintesGeral.contains(ouvinte)) {
+            ouvintesGeral.add(ouvinte);
         }
     }
 
     public synchronized void removeOuvinte(NotaLancadaListener ouvinte){
-        ouvintes.remove(ouvinte);
+        ouvintesGeral.remove(ouvinte);
     }
 
 
-//    public List<NotaLancadaListener> getOuvinte() {
-//        return ouvinte;
-//    }
-//
-//    public void setOuvinte(List<NotaLancadaListener> ouvinte) {
-//        this.ouvinte = ouvinte;
-//    }
+    public synchronized void addOuvinteNotaBaixa(NotaAbaixoMediaLancadaListener ouvinte){
+        if(!ouvinteNotaBaixa.contains(ouvinte)) {
+            ouvinteNotaBaixa.add(ouvinte);
+        }
+    }
+
+    public synchronized void removeOuvinteNotaBaixa(NotaAbaixoMediaLancadaListener ouvinte){
+        ouvinteNotaBaixa.remove(ouvinte);
+    }
+
+
+
+
+
 
     public String getTitulo() {
         return titulo;
@@ -69,18 +79,36 @@ public class Avaliacao {
     public void setNota(Double nota) {
         this.nota = nota;
 
+        if(nota<= 6){
+            notifyNotaAbaixoMediaLancada();
+        }
+
         notifyNotaLancada();
 
     }
 
-    private void notifyNotaLancada(){
+    private void notifyNotaLancada() {
         NotaLancadaEvent event = new NotaLancadaEvent(this);
 
-        synchronized (ouvintes) {
-            for (NotaLancadaListener ouvinte : ouvintes) {
+
+        synchronized (ouvintesGeral) {
+            for (NotaLancadaListener ouvinte : ouvintesGeral) {
                 ouvinte.notaLancada(event);
 
             }
         }
+    }
+
+        private void notifyNotaAbaixoMediaLancada(){
+            NotaAbaixoMediaLancadaEvent event = new NotaAbaixoMediaLancadaEvent(this);
+
+
+
+            synchronized (ouvinteNotaBaixa) {
+                for (NotaAbaixoMediaLancadaListener ouvinte : ouvinteNotaBaixa) {
+                    ouvinte.notaAbaixoMediaLancada(event);
+
+                }
+            }
     }
 }
