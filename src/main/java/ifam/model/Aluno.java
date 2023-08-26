@@ -6,19 +6,14 @@ public class Aluno {
 
     private String matricula;
     private String email;
+    private String telefone;
 
-    public String getEmail() {
-        return email;
-    }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Aluno(String nome, String matricula, String email) {
+    public Aluno(String nome, String matricula, String email, String telefone) {
         this.nome = nome;
         this.matricula = matricula;
         this.email = email;
+        this.telefone = telefone;
     }
 
     public String getNome() {
@@ -35,5 +30,22 @@ public class Aluno {
 
     public void setMatricula(String matricula) {
         this.matricula = matricula;
+    }
+
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
